@@ -1,0 +1,54 @@
+package idcard;
+import java.util.Scanner;
+public class IDCardTest {
+    public static boolean isValidIDNumber(String number){
+        if(number.length()!=18)return false;
+        for(int i=0;i<17;i++)if(number.charAt(i)>'9'&&number.charAt(i)<'0')return false;
+        int year=Integer.parseInt(number.substring(6,10));
+        int month=Integer.parseInt(number.substring(10,12));
+        int day=Integer.parseInt(number.substring(12,14));
+        //int code=Integer.parseInt(number.substring(14,17));
+        char correct=number.charAt(17);
+        int daysInMonth=0;
+        switch (month) {
+            case 1:
+            case 3:
+            case 5:
+            case 7:
+            case 8:
+            case 10:
+            case 12: daysInMonth = 31;break;
+            case 2:
+                if (year % 4 == 0 && year % 100 != 0 || year % 400 == 0) {
+                    daysInMonth = 29;
+                } else {
+                    daysInMonth = 28;
+                }
+                break;
+            case 4:
+            case 6:
+            case 9:
+            case 11: daysInMonth = 30;break;
+            default:
+        }
+        if(month>=1&&month<=12&&day>=1&&day<=daysInMonth){
+            int[] factor={7,9,10,5,8,4,2,1,6,3,7,9,10,5,8,4,2};
+            int sum=0;
+            char[] trueCorrect={'1','0','x','9','8','7','6','5','4','3','2'};
+            for(int i=0;i<number.length()-1;i++){
+                String[] s=number.split("");
+                sum=sum+Integer.parseInt(s[i])*factor[i];
+            }
+            int y=sum%11;
+            return correct == trueCorrect[y];
+        }else return false;
+    }
+    //MAIN
+    public static void main(String[] args){
+        String id;
+        Scanner a=new Scanner(System.in);
+        System.out.println("输入身份证号");
+        id=a.nextLine();
+        System.out.println(IDCardTest.isValidIDNumber(id));
+    }
+}
