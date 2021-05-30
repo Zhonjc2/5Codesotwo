@@ -17,7 +17,7 @@ public class StackImage extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        Image image1=new Image("code.PNG");
+        Image image1=new Image("/*图片路径*/");
         ImageView iv1=new ImageView(image1);
         Color color=new Color(1,1,1,1);
         StackPane spane1=new StackPane(iv1);
